@@ -14,11 +14,17 @@ body {
 }
 
 .piano {
-  width: 1250px;
-  height: 550px;
+  width: min(1250px, 95vw);
+  height: min(
+    550px,
+    calc(95vw * 550 / 1250)
+  ); /* Keep the 1250:550 ratio when shrinking */
   background-color: #050505;
-  border-radius: 35px;
-  padding: 20px 50px;
+  border-radius: 15px;
+  padding: min(
+    2rem,
+    calc(95vw * 32 / 1250)
+  ); /* Scale with the piano, max 2rem */
   box-sizing: border-box; /* Ensure padding doesn't break fixed dimensions */
 }
 
