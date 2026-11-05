@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Piano</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="piano">
+        <div class="key-container">
+          <!-- Layer 2: Black keys -->
+          <div class="row black-key-row">
+            <div
+              class="key black-key"
+              data-key="C#"
+              onclick="keyClickHandler('C#')"
+            >
+              <span>C#</span>
+            </div>
+            <div
+              class="key black-key"
+              data-key="D#"
+              onclick="keyClickHandler('D#')"
+            >
+              <span>D#</span>
+            </div>
+            <div class="key blank-key"></div>
+            <div
+              class="key black-key"
+              data-key="F#"
+              onclick="keyClickHandler('F#')"
+            >
+              <span>F#</span>
+            </div>
+            <div
+              class="key black-key"
+              data-key="G#"
+              onclick="keyClickHandler('G#')"
+            >
+              <span>G#</span>
+            </div>
+            <div
+              class="key black-key"
+              data-key="A#"
+              onclick="keyClickHandler('A#')"
+            >
+              <span>A#</span>
+            </div>
+          </div>
+          <!-- Layer 1: White keys -->
+          <div class="row white-key-row">
+            <div
+              class="key white-key"
+              data-key="C"
+              onclick="keyClickHandler('C')"
+            >
+              <span>C</span>
+            </div>
+            <div
+              class="key white-key"
+              data-key="D"
+              onclick="keyClickHandler('D')"
+            >
+              <span>D</span>
+            </div>
+            <div
+              class="key white-key"
+              data-key="E"
+              onclick="keyClickHandler('E')"
+            >
+              <span>E</span>
+            </div>
+            <div
+              class="key white-key"
+              data-key="F"
+              onclick="keyClickHandler('F')"
+            >
+              <span>F</span>
+            </div>
+            <div
+              class="key white-key"
+              data-key="G"
+              onclick="keyClickHandler('G')"
+            >
+              <span>G</span>
+            </div>
+            <div
+              class="key white-key"
+              data-key="A"
+              onclick="keyClickHandler('A')"
+            >
+              <span>A</span>
+            </div>
+            <div
+              class="key white-key"
+              data-key="B"
+              onclick="keyClickHandler('B')"
+            >
+              <span>B</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>Click on the keys or use your keyboard to play the piano.</p>
+        <div class="row">
+          <div class="col-12">
+            <strong>A</strong> on your keyboard maps to the
+            <strong>C key</strong>
+          </div>
+          <div class="col-12">
+            <strong>W</strong> on your keyboard maps to the
+            <strong>C# key</strong>
+          </div>
+          <div class="col-12">
+            <strong>S</strong> on your keyboard maps to the
+            <strong>D key</strong>
+          </div>
+          <div class="col-12">
+            <strong>E</strong> on your keyboard maps to the
+            <strong>D# key</strong>
+          </div>
+          <div class="col-12">
+            <strong>D</strong> on your keyboard maps to the
+            <strong>E key</strong>
+          </div>
+          <div class="col-12">
+            <strong>F</strong> on your keyboard maps to the
+            <strong>F key</strong>
+          </div>
+          <div class="col-12">
+            <strong>T</strong> on your keyboard maps to the
+            <strong>F# key</strong>
+          </div>
+          <div class="col-12">
+            <strong>G</strong> on your keyboard maps to the
+            <strong>G key</strong>
+          </div>
+          <div class="col-12">
+            <strong>Y</strong> on your keyboard maps to the
+            <strong>G# key</strong>
+          </div>
+          <div class="col-12">
+            <strong>H</strong> on your keyboard maps to the
+            <strong>A key</strong>
+          </div>
+          <div class="col-12">
+            <strong>U</strong> on your keyboard maps to the
+            <strong>A# key</strong>
+          </div>
+          <div class="col-12">
+            <strong>J</strong> on your keyboard maps to the
+            <strong>B key</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
