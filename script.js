@@ -84,7 +84,9 @@ window.addEventListener("pointerdown", (pointerDownEvt) => {
   if (pointerDownEvt.button !== 0) {
     return;
   }
-  const keyPressed = pointerDownEvt.target.getAttribute("data-key");
+  const keyPressed =
+    pointerDownEvt.target.getAttribute("data-key") ||
+    pointerDownEvt.target.parentElement.getAttribute("data-key"); // need to add this in case the user clicks on the text inside the key
   if (!keyPressed) {
     return;
   }
@@ -95,7 +97,9 @@ const cancelPointerEvents = (pointerEvent) => {
   if (pointerEvent.button !== 0) {
     return;
   }
-  const keyPressed = pointerEvent.target.getAttribute("data-key");
+  const keyPressed =
+    pointerEvent.target.getAttribute("data-key") ||
+    pointerEvent.target.parentElement.getAttribute("data-key"); // need to add this in case the user clicks on the text inside the key
   if (!keyPressed) {
     return;
   }
