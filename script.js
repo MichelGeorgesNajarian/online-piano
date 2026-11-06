@@ -21,6 +21,20 @@ const keyMapping = {
 
 const validKeyCodes = Object.keys(keyMapping);
 
+validKeyCodes.forEach((keyCode) => {
+  const srcFile = keyMapping[keyCode].srcFile;
+  if (!srcFile) {
+    console.warn(`No audio file found for key: ${keyCode}`);
+    return;
+  }
+  keyMapping[keyCode].audio = new Audio(srcFile);
+});
+
+const playAudio = (audio) => {
+  audio.currentTime = 0; // resetting the audio to the beginning
+  audio.play();
+};
+
 const playPressedKeysAudio = () => {
   validKeyCodes.forEach((keyCode) => {
     if (keyMapping[keyCode].state === KeyState.PRESSED) {
@@ -29,21 +43,9 @@ const playPressedKeysAudio = () => {
         return;
       }
       keyMapping[keyCode].state = KeyState.PLAYED;
-      playAudio(keyMapping[keyCode].srcFile);
+      playAudio(keyMapping[keyCode].audio);
     }
   });
-};
-
-const keyClickHandler = (key) => {
-  console.log(`Key clicked: ${key}`);
-  const keyCode = Object.keys(keyMapping).find(
-    (k) => keyMapping[k].note === key,
-  );
-  if (!keyCode || !keyMapping[keyCode].srcFile) {
-    console.warn(`No audio file found for key: ${key}`);
-  }
-  keyMapping[keyCode].state =  KeyState.PRESSED;
-  playPressedKeysAudio();
 };
 
 const toggleKeyState = (keyCode) => {
@@ -51,35 +53,69 @@ const toggleKeyState = (keyCode) => {
     console.warn(`Invalid key code: ${keyCode}`);
     return;
   }
-  const keyElement = document.querySelector(
-    `.key[data-key="${keyMapping[keyCode].note}"]`,
-  );
+  const keyElement = document.querySelector(`.key[data-key="${keyCode}"]`);
   if (!keyElement) {
     console.warn(`No key element found for key code: ${keyCode}`);
     return;
   }
-  if (keyMapping[keyCode].state === KeyState.PRESSED) {
+
+  if (keyMapping[keyCode].state !== KeyState.RELEASED) {
     keyElement.classList.add("active");
   } else {
     keyElement.classList.remove("active");
   }
 };
 
+const handlePlayEvent = (keyCode) => {
+  keyMapping[keyCode].state =
+    keyMapping[keyCode].state === KeyState.RELEASED
+      ? KeyState.PRESSED
+      : keyMapping[keyCode].state;
+  toggleKeyState(keyCode);
+  playPressedKeysAudio();
+};
+
+const handleReleaseEvent = (keyCode) => {
+  keyMapping[keyCode].state = KeyState.RELEASED;
+  toggleKeyState(keyCode);
+};
+
+window.addEventListener("pointerdown", (pointerDownEvt) => {
+  if (pointerDownEvt.button !== 0) {
+    return;
+  }
+  const keyPressed = pointerDownEvt.target.getAttribute("data-key");
+  if (!keyPressed) {
+    return;
+  }
+  handlePlayEvent(keyPressed);
+});
+
+const cancelPointerEvents = (pointerEvent) => {
+  if (pointerEvent.button !== 0) {
+    return;
+  }
+  const keyPressed = pointerEvent.target.getAttribute("data-key");
+  if (!keyPressed) {
+    return;
+  }
+  handleReleaseEvent(keyPressed);
+};
+
+window.addEventListener("pointerup", (pointerUpEvt) => {
+  cancelPointerEvents(pointerUpEvt);
+});
+
+window.addEventListener("pointercancel", (pointerCancelEvt) => {
+  cancelPointerEvents(pointerCancelEvt);
+});
+
 window.addEventListener("keydown", (keyEvent) => {
   // Handle keydown events for piano keys
   if (!validKeyCodes.includes(keyEvent.code)) {
     return;
   }
-  if (!keyMapping[keyEvent.code].srcFile) {
-    console.warn(`No audio file found for key: ${keyEvent.code}`);
-    return;
-  }
-  keyMapping[keyEvent.code].state =
-    keyMapping[keyEvent.code].state === KeyState.RELEASED
-      ? KeyState.PRESSED
-      : keyMapping[keyEvent.code].state;
-  toggleKeyState(keyEvent.code);
-  playPressedKeysAudio();
+  handlePlayEvent(keyEvent.code);
 });
 
 window.addEventListener("keyup", (keyEvent) => {
@@ -87,18 +123,5 @@ window.addEventListener("keyup", (keyEvent) => {
   if (!validKeyCodes.includes(keyEvent.code)) {
     return;
   }
-  if (!keyMapping[keyEvent.code].srcFile) {
-    console.warn(`No audio file found for key: ${keyEvent.code}`);
-    return;
-  }
-  keyMapping[keyEvent.code].state = KeyState.RELEASED;
-
-  toggleKeyState(keyEvent.code);
-  // Optionally, you can stop the audio or perform other actions on key release
+  handleReleaseEvent(keyEvent.code);
 });
-
-const playAudio = (audioFile) => {
-  const audio = new Audio(audioFile);
-  audio.currentTime = 0; // resetting the audio to the beginning
-  audio.play();
-};
