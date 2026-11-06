@@ -168,7 +168,6 @@ body {
   background-color: #e5e5e5;
 }
 
-.white-key-row .key:active, /* Active state for white keys */
 .white-key-row .key.active {
   /* Active state for white keys done by adding active class to key that's pressed */
   background-color: #cecece;
@@ -178,7 +177,6 @@ body {
   background-color: #333;
 }
 
-.black-key-row .key:active,
 .black-key-row .key.active {
   background-color: #111;
 }
